@@ -11,11 +11,20 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import org.fusesource.jansi.Ansi;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import java.io.File;
+import java.io.IOException;
 
 public class App {
     public static void main(String[] args) {
 
-        String projectName = "devops demo";
+
+        String projectName = "devops ln1";
         String title = StringUtils.upperCase(projectName);
 
         System.out.println("======================================");
@@ -41,21 +50,66 @@ public class App {
 
         System.out.println(canvas.getText());
 
-
         System.out.println();
         System.out.println(Ansi.ansi().fgBlue().a("Projektinformationen").reset());
         System.out.println("--------------------------------------");
 
-// Tabellenkopf
+        // Tabellenkopf
         System.out.printf("%-20s | %-20s%n", "LN1", "Devops");
         System.out.println("--------------------------------------");
 
-// Tabelleninhalt
+        // Tabelleninhalt
         System.out.printf("%-20s | %-20s%n", "Name", "Rahul Parameswaran");
         System.out.printf("%-20s | %-20s%n", "Klasse", "WIN24a");
         System.out.printf("%-20s | %-20s%n", "E-Mail", "paramrah@students.zhaw.ch");
         System.out.printf("%-20s | %-20s%n", "Github Username", "cfo37");
 
         System.out.println("--------------------------------------");
+
+        // PDF erstellen
+        try {
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            contentStream.beginText();
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 20);
+            contentStream.newLineAtOffset(50, 750);
+            contentStream.showText("DevOps Build Report");
+
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
+            contentStream.newLineAtOffset(0, -40);
+            contentStream.showText("Projekt: " + title);
+
+            contentStream.newLineAtOffset(0, -25);
+            contentStream.showText("Name: Rahul Parameswaran");
+
+            contentStream.newLineAtOffset(0, -25);
+            contentStream.showText("Klasse: WIN24a");
+
+            contentStream.newLineAtOffset(0, -25);
+            contentStream.showText("E-Mail: paramrah@students.zhaw.ch");
+
+            contentStream.newLineAtOffset(0, -25);
+            contentStream.showText("GitHub Username: cfo37");
+
+            contentStream.newLineAtOffset(0, -25);
+            contentStream.showText("Build-Schritte: " + summary);
+
+            contentStream.endText();
+            contentStream.close();
+
+            document.save(new File("build-report.pdf"));
+            document.close();
+
+            System.out.println();
+            System.out.println(Ansi.ansi().fgGreen().a("PDF erfolgreich erstellt: build-report.pdf").reset());
+
+        } catch (IOException e) {
+            System.out.println(Ansi.ansi().fgRed().a("Fehler beim Erstellen des PDFs.").reset());
+            e.printStackTrace();
+        }
     }
 }
