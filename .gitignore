@@ -1,0 +1,14 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# NPM
+node_modules/
+
+# VS Code
+.vscode/
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
