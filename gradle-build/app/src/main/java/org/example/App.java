@@ -7,19 +7,55 @@ import com.indvd00m.ascii.render.Render;
 import com.indvd00m.ascii.render.api.ICanvas;
 import com.indvd00m.ascii.render.api.IContextBuilder;
 import com.indvd00m.ascii.render.elements.PseudoText;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
+import org.fusesource.jansi.Ansi;
 
 public class App {
     public static void main(String[] args) {
-        String title = "DevOps Abgabe 1";
-        System.out.println("Projektname: " + StringUtils.upperCase(title));
+
+        String projectName = "devops demo";
+        String title = StringUtils.upperCase(projectName);
+
+        System.out.println("======================================");
+        System.out.println("Projekt: " + title);
+        System.out.println("======================================");
+
+        ImmutableList<String> steps = ImmutableList.of(
+                "Gradle-Projekt erstellt",
+                "Dependencies eingebunden",
+                "GitHub verwendet",
+                "Build erfolgreich"
+        );
+
+        String summary = Joiner.on(" -> ").join(steps);
+        System.out.println(summary);
+        System.out.println();
 
         Render render = new Render();
         IContextBuilder builder = render.newBuilder();
-        builder.width(120).height(20);
+        builder.width(150).height(20);
         builder.element(new PseudoText("paramrah"));
         ICanvas canvas = render.render(builder.build());
 
         System.out.println(canvas.getText());
+
+
+        System.out.println();
+        System.out.println(Ansi.ansi().fgBlue().a("Projektinformationen").reset());
+        System.out.println("--------------------------------------");
+
+// Tabellenkopf
+        System.out.printf("%-20s | %-20s%n", "LN1", "Devops");
+        System.out.println("--------------------------------------");
+
+// Tabelleninhalt
+        System.out.printf("%-20s | %-20s%n", "Name", "Rahul Parameswaran");
+        System.out.printf("%-20s | %-20s%n", "Klasse", "WIN24a");
+        System.out.printf("%-20s | %-20s%n", "E-Mail", "paramrah@students.zhaw.ch");
+        System.out.printf("%-20s | %-20s%n", "Github Username", "cfo37");
+
+        System.out.println("--------------------------------------");
     }
 }
