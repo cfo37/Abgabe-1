@@ -22,11 +22,15 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // This dependency is used by the application.
+    // Weitere Abhängigkeiten hinzufügen
     implementation libs.guava
     implementation 'com.indvd00m.ascii.render:ascii-render:2.2.0'
+    // Apache PDFBox für PDF-Erstellung
     implementation 'org.apache.pdfbox:pdfbox:3.0.1'
+    // Weitere Apache Commons Bibliotheken hinzufügen
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'org.apache.commons:commons-text:1.11.0'
+    // Jansi für farbige Konsolenausgabe
     implementation 'org.fusesource.jansi:jansi:2.4.0'
 
 }

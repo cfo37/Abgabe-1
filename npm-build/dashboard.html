@@ -162,9 +162,11 @@
       { name: "Füllkrug", team: "Dortmund", goals: 1, assists: 0, shots: 3 }
     ];
 
+    // Aktuelles Datum und Uhrzeit anzeigen mit Day.js
     document.getElementById("timestamp").innerText =
       "Letztes Update: " + dayjs().format("DD.MM.YYYY HH:mm:ss");
 
+    // Tore pro Team berechnen mit Lodash
     const bayernGoals = _.sumBy(_.filter(players, { team: "Bayern" }), "goals");
     const dortmundGoals = _.sumBy(_.filter(players, { team: "Dortmund" }), "goals");
 

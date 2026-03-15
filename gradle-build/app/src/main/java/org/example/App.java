@@ -25,12 +25,13 @@ public class App {
 
 
         String projectName = "devops ln1";
-        String title = StringUtils.upperCase(projectName);
+        String title = StringUtils.upperCase(projectName); // Projektname in Großbuchstaben umwandeln mit Apache Commons Lang
 
         System.out.println("======================================");
         System.out.println("Projekt: " + title);
         System.out.println("======================================");
 
+        // Build-Schritte in einer Liste speichern und mit Guava's Joiner zu einem String verbinden
         ImmutableList<String> steps = ImmutableList.of(
                 "Gradle-Projekt erstellt",
                 "Dependencies eingebunden",
@@ -42,6 +43,8 @@ public class App {
         System.out.println(summary);
         System.out.println();
 
+
+        // ASCII-Art mit AsciiRender erstellen
         Render render = new Render();
         IContextBuilder builder = render.newBuilder();
         builder.width(150).height(20);
@@ -51,7 +54,7 @@ public class App {
         System.out.println(canvas.getText());
 
         System.out.println();
-        System.out.println(Ansi.ansi().fgBlue().a("Projektinformationen").reset());
+        System.out.println(Ansi.ansi().fgBlue().a("Projektinformationen").reset()); // Überschrift in Blau mit Jansi
         System.out.println("--------------------------------------");
 
         // Tabellenkopf
@@ -66,7 +69,7 @@ public class App {
 
         System.out.println("--------------------------------------");
 
-        // PDF erstellen
+        // PDF erstellen mit Apache PDFBox
         try {
             PDDocument document = new PDDocument();
             PDPage page = new PDPage(PDRectangle.A4);
@@ -105,10 +108,10 @@ public class App {
             document.close();
 
             System.out.println();
-            System.out.println(Ansi.ansi().fgGreen().a("PDF erfolgreich erstellt: build-report.pdf").reset());
+            System.out.println(Ansi.ansi().fgGreen().a("PDF erfolgreich erstellt: build-report.pdf").reset()); // Erfolgsmeldung in Grün mit Jansi
 
         } catch (IOException e) {
-            System.out.println(Ansi.ansi().fgRed().a("Fehler beim Erstellen des PDFs.").reset());
+            System.out.println(Ansi.ansi().fgRed().a("Fehler beim Erstellen des PDFs.").reset());  // Fehlermeldung in Rot mit Jansi
             e.printStackTrace();
         }
     }
